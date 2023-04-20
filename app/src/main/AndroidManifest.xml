@@ -23,8 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.todo.MainActivity" />
         <activity android:name="com.example.todo.ui.main.MainActivity" />
+        <activity android:name="com.example.todo.ui.settings.SettingsActivity" />
+        <activity android:name="com.example.todo.ui.edit.EditActivity" />
     </application>
 
 </manifest>
