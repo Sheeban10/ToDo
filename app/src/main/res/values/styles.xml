@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="TitleAppearance" parent="Theme.ToDo">
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="DrawerAppearance" parent="Theme.ToDo">
+        <item name="colorPrimary">@color/gold</item>
+        <item name="colorSurface">?android:attr/colorBackground</item>
+        <item name="colorControlHighlight">@color/gold</item>
+    </style>
+
+    <style name="DialogAppearance" parent="Theme.MaterialComponents.DayNight.Dialog">
+        <item name="colorControlActivated">@color/gold</item>
+        <item name="colorPrimary">@color/gold</item>
+    </style>
+</resources>
