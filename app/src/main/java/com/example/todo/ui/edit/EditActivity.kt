@@ -54,9 +54,6 @@ class EditActivity : AppCompatActivity() {
     private var note:Note = Note("", "", "", starred = false, archived = false, trash = false, edited = false, timestamp = null)
     private val notesViewModel:NotesViewModel by viewModels()
     private var theme:String? = ""
-    private val REQUEST_IMAGE_PICKER = 1
-    private val REQUEST_IMAGE_CAPTURE = 2
-    private var imageUri: Uri? = null // variable to store the selected/captured image URI
 
 
     @RequiresApi(Build.VERSION_CODES.Q)
@@ -270,5 +267,7 @@ class EditActivity : AppCompatActivity() {
             menu?.findItem(R.id.trash_permanent_menu_item)?.isVisible = false
         }
     }
+
+
 }
 

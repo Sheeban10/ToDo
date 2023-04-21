@@ -20,7 +20,6 @@ constructor(
     private val mInflater = LayoutInflater.from(context)
     private var notes:List<Note> = ArrayList()
 
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
         val itemView = mInflater.inflate(R.layout.note, parent, false)
         return NotesViewHolder(itemView)
