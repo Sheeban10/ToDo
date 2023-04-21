@@ -21,8 +21,7 @@
             android:layout_marginHorizontal="5dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            android:name="com.example.todo.ui.main.ArchivesFragment" />
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/my_app_bar"

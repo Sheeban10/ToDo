@@ -1,23 +1,41 @@
 package com.example.todo.ui.edit
 
 import android.content.DialogInterface
+import android.content.Intent
+import android.icu.text.DateFormat
+import android.icu.text.SimpleDateFormat
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.FileProvider
 import androidx.core.widget.doOnTextChanged
+import com.example.todo.BuildConfig
 import com.example.todo.R
 import com.example.todo.data.model.Note
 import com.example.todo.data.viewmodel.NotesViewModel
+import com.example.todo.databinding.ActivityEditBinding
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.Timestamp
 import dagger.hilt.android.AndroidEntryPoint
+import java.io.File
 import java.util.*
 import kotlin.time.Duration.Companion.milliseconds
 import kotlin.time.ExperimentalTime
@@ -25,6 +43,7 @@ import kotlin.time.milliseconds
 
 @AndroidEntryPoint
 class EditActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityEditBinding
     private lateinit var titleEditText: EditText
     private lateinit var editTime: TextView
     private lateinit var contentEditText: EditText
@@ -34,17 +53,29 @@ class EditActivity : AppCompatActivity() {
     private var prepopulate = false
     private var note:Note = Note("", "", "", starred = false, archived = false, trash = false, edited = false, timestamp = null)
     private val notesViewModel:NotesViewModel by viewModels()
+    private var theme:String? = ""
+    private val REQUEST_IMAGE_PICKER = 1
+    private val REQUEST_IMAGE_CAPTURE = 2
+    private var imageUri: Uri? = null // variable to store the selected/captured image URI
 
+
+    @RequiresApi(Build.VERSION_CODES.Q)
     @ExperimentalTime
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_edit)
 
+        val sp = this.getSharedPreferences("com.example.todo_preferences", 0)
+        theme = sp.getString("theme_preference", "system")
+        setTheme(theme)
+
+        setContentView(R.layout.activity_edit)
         titleEditText = findViewById(R.id.title_edit_text)
         editTime = findViewById(R.id.edit_time)
         contentEditText = findViewById(R.id.content_edit_text)
         toolbar = findViewById(R.id.edit_toolbar)
         bottomAppBar = findViewById(R.id.edit_bottom_app_bar)
+
+
 
         try {
             intentNote = intent.getParcelableExtra("note")!!
@@ -76,9 +107,13 @@ class EditActivity : AppCompatActivity() {
         contentEditText.doOnTextChanged { text, _, _, _ ->
             note.content = text.toString()
         }
+
+
+
     }
 
-    @ExperimentalTime
+
+        @ExperimentalTime
     private fun getDay(date:Date):String{
         val timeMS = date.time
         val timeCalendar = Calendar.getInstance()
@@ -108,7 +143,22 @@ class EditActivity : AppCompatActivity() {
         setMenuOptions(menu)
         return super.onCreateOptionsMenu(menu)
     }
-
+    private fun setTheme(theme:String?){
+        when(theme){
+            "system" -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+            }
+            "dark" -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+            }
+            "light" -> {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+            }
+            else -> {
+                Log.i("Theme Empty", "Why god why?")
+            }
+        }
+    }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             android.R.id.home -> {
@@ -221,3 +271,4 @@ class EditActivity : AppCompatActivity() {
         }
     }
 }
+

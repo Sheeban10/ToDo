@@ -11,12 +11,15 @@ import com.example.todo.data.model.Note
 import com.example.todo.ui.edit.EditActivity
 import com.example.todo.R
 
+
+
 class NotesAdapter
 constructor(
         val context:Context,
         ) : RecyclerView.Adapter<NotesAdapter.NotesViewHolder>() {
     private val mInflater = LayoutInflater.from(context)
     private var notes:List<Note> = ArrayList()
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
         val itemView = mInflater.inflate(R.layout.note, parent, false)
@@ -47,14 +50,15 @@ constructor(
         return notes.size
     }
 
-    fun setNotes(mNotes:List<Note>){
+    fun setNotes(mNotes: List<Note>) {
         notes = mNotes
         notifyDataSetChanged()
     }
 
-    inner class NotesViewHolder(itemView:View) : RecyclerView.ViewHolder(itemView), View.OnClickListener{
-        var titleView:TextView = itemView.findViewById(R.id.note_title)
-        var contentView:TextView = itemView.findViewById(R.id.note_content)
+    inner class NotesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
+        View.OnClickListener {
+        var titleView: TextView = itemView.findViewById(R.id.note_title)
+        var contentView: TextView = itemView.findViewById(R.id.note_content)
 
         init {
             itemView.setOnClickListener(this)

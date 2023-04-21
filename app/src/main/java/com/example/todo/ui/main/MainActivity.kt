@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import com.example.todo.LoginActivity
 import com.example.todo.R
 import com.example.todo.data.viewmodel.NotesViewModel
+import com.example.todo.databinding.ActivityMainBinding
 import com.example.todo.ui.settings.SettingsActivity
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.navigation.NavigationView
@@ -31,7 +32,7 @@ import kotlin.Exception
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
-
+    private lateinit var binding: ActivityMainBinding
     @Inject
     lateinit var firebaseAuth: FirebaseAuth
     private lateinit var toolbar: Toolbar
@@ -52,16 +53,6 @@ class MainActivity : AppCompatActivity() {
         theme = sp.getString("theme_preference", "system")
         setTheme(theme)
 
-        //  Check logged in user
-        user = firebaseAuth.currentUser
-        if(user == null){
-            val authActivity = Intent(this, LoginActivity::class.java)
-            authActivity.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            authActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            authActivity.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
-            startActivity(authActivity)
-        }
-        else{
             //  Display content
             setContentView(R.layout.activity_main)
 
@@ -91,7 +82,6 @@ class MainActivity : AppCompatActivity() {
             }
 
             initializeFragment()
-        }
     }
 
     override fun onResume() {
